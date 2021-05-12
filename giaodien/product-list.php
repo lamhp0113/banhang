@@ -1,37 +1,57 @@
 <?php
 include "db.php";
 if (isset($_GET["id_loai"])) {
-    $id_loai = $_GET["id_loai"];
+	$id_loai = $_GET["id_loai"];
 
 
-    $sql2 = "SELECT *FROM loai_hang_hoas where id = $id_loai ";
-    $result2 = mysqli_query($conn, $sql2);
-    $in1 = mysqli_fetch_array($result2);
+	$sql2 = "SELECT *FROM loai_hang_hoas where id = $id_loai ";
+	$result2 = mysqli_query($conn, $sql2);
+	$in1 = mysqli_fetch_array($result2);
 
 
 // BƯỚC 2: TÌM TỔNG SỐ RECORDS
-$sql = "SELECT count(id) as total from hang_hoas where id_loai=$id_loai";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
-$total_records = $row['total'];
+	$sql = "SELECT count(id) as total from hang_hoas where id_loai=$id_loai";
+	$result = mysqli_query($conn, $sql);
+	$row = mysqli_fetch_assoc($result);
+	$total_records = $row['total'];
 // BƯỚC 3: TÌM LIMIT VÀ CURRENT_PAGE
-$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
-$limit = 3;
+	$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+	$limit = 3;
 // BƯỚC 4: TÍNH TOÁN TOTAL_PAGE VÀ START
 // tổng số trang
-$total_page = ceil($total_records / $limit);
+	$total_page = ceil($total_records / $limit);
 // Giới hạn current_page trong khoảng 1 đến total_page
-if ($current_page > $total_page) {
-    $current_page = $total_page;
-} else if ($current_page < 1) {
-    $current_page = 1;
-}
+	if ($current_page > $total_page) {
+		$current_page = $total_page;
+	} else if ($current_page < 1) {
+		$current_page = 1;
+	}
 // Tìm Start
-$start = ($current_page - 1) * $limit;
+	$start = ($current_page - 1) * $limit;
 
 // BƯỚC 5: TRUY VẤN LẤY DANH SÁCH TIN TỨC
-$qr = "SELECT * FROM hang_hoas where id_loai=$id_loai  LIMIT $start, $limit";     // Có limit và start rồi thì truy vấn CSDL lấy danh sách tin tức
-$danhsachsanpham = mysqli_query($conn,$qr);
+	$sapxepgia='';
+	if (isset($_GET['gia'])) {
+		$sapxepgia=$_GET['gia'];
+
+	}else{
+		$sapxepgia='ASC';
+	}
+	$sapxepten='';
+	if (isset($_GET['ten'])) {
+		$sapxepten=$_GET['ten'];
+	}else{
+		$sapxepten='ASC';
+	}
+	if (isset($_GET['gia'])) {
+		$qr = "SELECT * FROM hang_hoas  where id_loai=$id_loai ORDER BY gia $sapxepgia  LIMIT $start, $limit";
+	}else if (isset($_GET['ten'])) {
+		$qr = "SELECT * FROM hang_hoas  where id_loai=$id_loai ORDER BY Ten_hang_hoa $sapxepten LIMIT $start, $limit";
+	}else{
+		$qr = "SELECT * FROM hang_hoas where id_loai=$id_loai  LIMIT $start, $limit";
+	};
+
+	$danhsachsanpham = mysqli_query($conn,$qr);
 }
 ?>
 
@@ -39,19 +59,34 @@ $danhsachsanpham = mysqli_query($conn,$qr);
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Home | E-Shopper</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Home | E-Shopper</title>
 
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
 <![endif]-->
-    <?php include '../layouts/style.php'; ?>
-    <?php include '../layouts/script.php'; ?>
+<?php include '../layouts/style.php'; ?>
+<?php include '../layouts/script.php'; ?>
+<script language="javascript">
+	function priceChanged(obj)
+	{
+		var value = obj.value;
+		var duongdan= window.location.href+'&gia='+value;
+		window.location=duongdan;
+	}
 
+	function nameChanged(obj)
+	{
+		var value = obj.value;
+		var duongdan= window.location.href+'&ten='+value;
+		window.location=duongdan;
+	}
+	
+</script>
 </head>
 <!--/head-->
 
@@ -64,7 +99,23 @@ $danhsachsanpham = mysqli_query($conn,$qr);
 				<div class="col-sm-9 padding-right">
 					<div class="features_items">
 						<!--features_items-->
-					<h2 class="title text-center"><?php echo $in1['Ten_loai']; ?> </h2>
+						<h2 class="title text-center"><?php echo $in1['Ten_loai']; ?> </h2>
+						<div style="width:100%;height:20%">
+							<p style="float:left;margin-left: 10px ">Sắp xếp theo:</p>
+							<select class="sapxepgia" onchange="priceChanged(this)" style="float:left;width: 30%;margin-left: 10px ">
+								<option  disabled selected>Giá</option>
+								<option  value="asc">Từ thấp đến cao</option>
+								<option  value="desc" >Từ cao đến thấp</option>
+							</select>
+							<select style="float:left;width: 30%;margin-left: 10px" onchange="nameChanged(this)">
+								<option disabled selected>Tên</option>
+								<option value="asc">Từ A-Z</option>
+								<option value="desc">Từ Z-A</option>
+							</select>
+
+						</div>
+						<br>
+						<br>
 
 						<?php
 						foreach ($danhsachsanpham as $value) { ?>
@@ -73,11 +124,11 @@ $danhsachsanpham = mysqli_query($conn,$qr);
 									<div class="single-products">
 										<div class="productinfo text-center">
 											<a href="product-detail.php?id=<?php echo $value['id']; ?>">
-											<img src="../<?php echo $value["hinh"]; ?>" alt="" width="200px" /> 
-                                            </a>
+												<img src="../<?php echo $value["hinh"]; ?>" alt="" width="200px" /> 
+											</a>
 											<h2><?php echo number_format($value["gia"]); ?></h2>
 											<span style="white-space: nowrap;overflow: hidden;text-overflow: clip;"><?php echo $value["Ten_hang_hoa"]; ?></span>
-                                            <br>
+											<br>
 											<a href="cart-xuly.php?id=<?php echo $value['id']; ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
 											<a href="product-detail.php?id=<?php echo $value['id']; ?>" class="btn btn-default add-to-cart">Xem sản phẩm </a>
 										</div>

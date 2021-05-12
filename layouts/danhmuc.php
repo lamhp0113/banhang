@@ -1,16 +1,14 @@
 <?php
 include "db.php";
-$sql = "SELECT *FROM loai_hang_hoas ";
-$result2 = mysqli_query($conn,$sql);
+
+$sql2 ="SELECT b.Ten_loai, count(a.id) as sl,b.id FROM hang_hoas a left JOIN loai_hang_hoas b on a.id_loai=b.id group by id_loai";
+
+
+$demsp = mysqli_query($conn,$sql2);
+
 ?>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  $("a").click(function(){
-    $("#div1").load("product-list.php.php");
-  });
-});
-</script>
+
+
 
 <div class="col-sm-3">
 	<div class="left-sidebar">
@@ -26,12 +24,14 @@ $(document).ready(function(){
 					</h4>
 				</div>
 				<div id="sportswear" class="panel-collapse collapse">
-					<?php foreach ($result2 as $dm ) {
+					<?php foreach ($demsp as $dm ) {
 						?>
 						<div id="div1" class="panel-body"  style="padding:3px;margin-left:15px;">
 							<ul>
 								<li><a href="product-list.php?id_loai=<?php echo $dm['id'] ?> ">
 									<?php echo $dm['Ten_loai'] ?>
+
+									(<?php echo $dm['sl']; ?>)
 								</a></li>
 
 							</ul>

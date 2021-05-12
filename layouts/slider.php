@@ -54,5 +54,5 @@ $rowcount=mysqli_num_rows($tintuc);
 
   </div>
 </div>
-</div>
+
   </section><!--/slider-->
