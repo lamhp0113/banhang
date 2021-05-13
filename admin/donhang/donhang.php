@@ -60,6 +60,8 @@ if (isset($_POST['hoanthanh'])) {
 								<dl>
 									<dt>Họ và tên</dt>
 									<dd><?php echo ($row['ten_khach_hang']); ?></dd>
+									<dt>Email</dt>
+									<dd><?php echo ($row['email']); ?></dd>
 									<dt>Số điện thoai</dt>
 									<dd><?php echo ($row['so_dien_thoai']); ?>.</dd>
 									<dt>Đia chỉ</dt>

@@ -7,8 +7,12 @@
       $result = mysqli_query($conn, $qr);
 
       if (isset($_POST['themhang'])) {
+       
 
         $ten = $_POST["ten"];
+        $masp = $_POST["masp"];
+
+      
         $gia = $_POST["gia"];
         $soluong = $_POST["soluong"];
         $hinh = $_FILES['hinh'];
@@ -24,18 +28,22 @@
 
 
 
-        $sql = "INSERT INTO `hang_hoas`(`Ten_hang_hoa`, `gia`, `so_luong_hang`, `hinh`, `id_loai`, `lvproduct`) VALUES ('$ten','$gia','$soluong','$img_url2',$idloaisanpham,'2')";
+        $sql = "INSERT INTO `hang_hoas`(`Ten_hang_hoa`,`ma_code`, `gia`, `so_luong_hang`, `hinh`, `id_loai`, `lvproduct`) VALUES ('$ten','$masp','$gia','$soluong','$img_url2',$idloaisanpham,'2')";
         $in = mysqli_query($conn, $sql);
         header('location:list-sanpham.php');
       }
       ?>
       <script>
         function validate() {
+              if (document.myForm.masp.value == "") /*goi ra dư lại sau value điều kiên thoải mãn*/ {
+            alert("chua nhập masp!");
+            return false;
+          }
           if (document.myForm.ten.value == "") /*goi ra dư lại sau value điều kiên thoải mãn*/ {
             alert("chua nhập tên!");
             return false;
           }
-
+     
           if (document.myForm.gia.value.length < 6) {
             alert("chua nhap giá trên 6 ky tự");
             return false;
@@ -139,6 +147,8 @@
                       <tr>
                         <label>Tên loại hàng</label>
                         <input type="text" class="form-control" style="width:30%" placeholder="nhap ten loại" name="ten">
+                              <label>Ma sp</label>
+                        <input type="text" class="form-control" style="width:30%" placeholder="nhap masp" name="masp">
 
                         <label>Gía</label>
 

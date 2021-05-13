@@ -39,7 +39,7 @@ $result = mysqli_query($conn,$sql);
 								<div class="product-information"><!--/product-information-->
 
 									<h2><?php  echo $row["Ten_hang_hoa"]; ?></h2>
-									<p>Mã sản phẩm: <?php  echo  $row["masp"]; ?></p>
+									<p>Mã code: <?php  echo  $row["ma_code"]; ?></p>
 									<span>
 										<span><?php  echo number_format($row["gia"]); ?></span>
 										<form action="cart-xuly.php?id=<?php echo $row["id"]; ?>" method="POST">

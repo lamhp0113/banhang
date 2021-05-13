@@ -123,6 +123,12 @@
 							</li>
 							<li>
 							
+								<input type="text" name="email" required="email" >
+											<label style="font-size: 20px">Email</label>
+							
+							</li>
+							<li>
+							
 								<input type="text" name="diachi" required="text" >
 									<label style="font-size: 20px">Địa chỉ</label>
 							

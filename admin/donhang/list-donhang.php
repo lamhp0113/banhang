@@ -46,6 +46,7 @@ $result = mysqli_query($conn,$qr);
               <tr>
                 <th>ID</th>
                 <th>Tên khach hang</th>
+                <th>email</th>
                 <th>SĐT</th>
                 <th>Địa chỉ</th>
                 <th>Ngày Đặt Hàng</th>
@@ -65,7 +66,8 @@ $result = mysqli_query($conn,$qr);
                 ?>
                 <tr>
                   <td><?php echo($dh['id']) ?></td>
-                  <td><?php echo($dh['ten_khach_hang']) ?></td> 
+                  <td><?php echo($dh['ten_khach_hang']) ?></td>
+                    <td><?php echo($dh['email']) ?></td> 
                   <td><?php echo($dh['so_dien_thoai']) ?></td>
                   <td><?php echo($dh['dia_chi']) ?></td>
                   <td><?php echo($dh['Ngay_Dat_Hang']) ?></td>

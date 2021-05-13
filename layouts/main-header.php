@@ -3,7 +3,46 @@
     $sql = "SELECT *FROM loai_hang_hoas ";
     $result2 = mysqli_query($conn,$sql);
     ?>
-    
+    <style>
+      body {
+        font-family: Arial;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+      }
+
+      form.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+      }
+
+      form.example button:hover {
+        background: #0b7dda;
+      }
+
+      form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+    </style>
 
     <header id="header"><!--header-->
       <div class="header_top"><!--header_top-->
@@ -36,7 +75,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4 clearfix">
-           
+
               <div class="btn-group pull-right clearfix">
 
 
@@ -91,11 +130,14 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="search_box pull-right">
-                <input type="text" placeholder="Search"/>
-              </div>
+
+              <form class="example" action="ketquatimkiem.php" method="POST" style="margin:auto;max-width:300px">
+                <input type="text" placeholder="Search.." name="keyword">
+                <button type="submit" name="search"><i class="fa fa-search"></i></button>
+              </form>
             </div>
           </div>
         </div>
-      </div><!--/header-bottom-->
-    </header><!--/header-->
+      </div>
+    </div><!--/header-bottom-->
+  </header><!--/header-->

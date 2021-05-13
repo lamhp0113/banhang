@@ -4,7 +4,7 @@ require_once "../../db.php";
 
 
 
-$sql2 ="SELECT a.id,a.Ten_hang_hoa,a.gia,a.so_luong_hang,a.hinh,b.Ten_loai FROM hang_hoas a left JOIN loai_hang_hoas b on a.id_loai=b.id";
+$sql2 ="SELECT a.id,a.ma_code,a.Ten_hang_hoa,a.gia,a.so_luong_hang,a.hinh,b.Ten_loai FROM hang_hoas a left JOIN loai_hang_hoas b on a.id_loai=b.id";
 
 $result2= mysqli_query($conn,$sql2);
 
@@ -49,6 +49,7 @@ $result2= mysqli_query($conn,$sql2);
             <tbody>
               <tr>
                 <th>ID</th>
+                <th>Mã code</th>
                 <th>Tên hàng hóa</th>
                 <th>Giá</th>
                 <th>Số lượng</th>
@@ -60,14 +61,15 @@ $result2= mysqli_query($conn,$sql2);
                 </th>
               </tr>
               <?php foreach ($result2 as $sp) {
-              ?>
+                ?>
                 <tr>
                   <td><?php echo ($sp['id']) ?></td>
+                  <td><?php echo ($sp['ma_code']) ?></td>
                   <td><?php echo ($sp['Ten_hang_hoa']) ?></td>
                   <td><?php echo ($sp['gia']) ?></td>
                   <td><?php echo ($sp['so_luong_hang']) ?></td>
-             
-                 <td><img src="../../<?php echo($sp['hinh']) ?>"  width="50px"></td>
+
+                  <td><img src="../../<?php echo($sp['hinh']) ?>"  width="50px"></td>
                   <td><?php echo ($sp['Ten_loai']) ?> </td>
                   <td>
 
@@ -75,7 +77,7 @@ $result2= mysqli_query($conn,$sql2);
 
                   <td>
                     <a href="sua.php?id=<?php  echo $sp["id"]; ?>" class="btn btn-sm btn-info">Edit</a>
-              <a href="xoa.php?id=<?php  echo $sp["id"]; ?>" onclick="return confirm('Bạn có chắc chắc muốn xóa không?.')" class="btn btn-sm btn-danger">Remove</a>
+                    <a href="xoa.php?id=<?php  echo $sp["id"]; ?>" onclick="return confirm('Bạn có chắc chắc muốn xóa không?.')" class="btn btn-sm btn-danger">Remove</a>
                   </td>
                 </tr>
               <?php } ?>
